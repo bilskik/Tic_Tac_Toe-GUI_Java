@@ -1,29 +1,32 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Tic_tac_toe {
+public class Tic_tac_toe extends JFrame implements ActionListener {
     JFrame frame;
     JButton but_1,but_2,but_3,but_4,but_5,but_6,but_7,but_8,but_9;
+    ImageIcon X,O;
     int [] checker = new int[9];
 
     Tic_tac_toe() {
-        ImageIcon X = new ImageIcon("X.png");
-        ImageIcon O = new ImageIcon("O.png");
+        X = new ImageIcon("X_1.png");
+        O = new ImageIcon("O_1.png");
+        Image scale_O = O.getImage().getScaledInstance(200,200,100);
 
         frame = new JFrame("Tic_tac_toe");
         frame.setTitle("Tic_tac_toe");
         frame.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
         frame.setSize(600,600);
+        //this.init();
 
         but_1 = new JButton();
         but_1.setBounds(0,0,200,200);
-        but_1.setIcon(X);
+        but_1.addActionListener(this);
         frame.add(but_1);
         but_2 = new JButton();
         but_2.setBounds(200,0,200,200);
-        but_2.setIcon(X);
+        but_2.addActionListener(this);
         frame.add(but_2);
         but_3 = new JButton();
         but_3.setBounds(400,0,200,200);
@@ -50,15 +53,22 @@ public class Tic_tac_toe {
         frame.setLayout(null);
         frame.setVisible(true);
     }
-    private void actionPerformed(ActionEvent a) {
+
+    public void actionPerformed(ActionEvent a) {
         if(a.getSource() == but_1) {
+            System.out.println(checker[0]);
             if(checker[0] == 1) {
-                //but_1.setText("X");
-               // but_1.setIcon(X);
+                but_1.setIcon(X);
+                checker[0] = 0;
+                but_1.setEnabled(false);
             }
         }
         else if(a.getSource() == but_2) {
-
+            if(checker[1] == 1) {
+                but_1.setIcon(X);
+                checker[0] = 0;
+                but_1.setEnabled(false);
+            }
         }
         else if(a.getSource() == but_3) {
 
@@ -83,7 +93,13 @@ public class Tic_tac_toe {
         }
 
     }
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         Tic_tac_toe game = new Tic_tac_toe();
+        game.init();
+    }
+    private void init() {
+        for(int i=0; i<9; i++) {
+            checker[i] = 1;
+        }
     }
 }
